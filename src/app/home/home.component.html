@@ -1,0 +1,66 @@
+<!-- ^ Categories  -->
+
+<div class="my-5">
+  <h2 class="mb-4">shop popular <span class="text-main">Categories</span></h2>
+  <div class="row">
+    <div *ngFor="let data of catData; let last = last" class="col-md-3">
+      <div class="bg-light rounded border p-2 text-center">
+        <img [src]="data.image" [alt]="data.title" class="w-100 imgStyle" />
+        <h6>{{ data.name }}</h6>
+      </div>
+      <div
+        *ngIf="last"
+        class="d-flex justify-content-end my-3 text-success fa-2x"
+        routerLink="/categories"
+      >
+        <i class="fa-solid far fa-circle-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ^ Products  -->
+
+<div class="my-5">
+  <h2 class="mb-4">shop popular <span class="text-main">Products</span></h2>
+  <div class="row">
+    <div *ngFor="let data of products; let last = last" class="col-md-3">
+      <div class="bg-light rounded border p-2 text-center">
+        <img
+          [src]="data.imageCover"
+          [alt]="data.title"
+          class="w-100 imgStyle"
+        />
+        <h6>{{ data.title }}</h6>
+      </div>
+      <div
+        *ngIf="last"
+        class="d-flex justify-content-end my-3 text-success fa-2x"
+        routerLink="/products"
+      >
+        <i class="fa-solid far fa-circle-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ^ Brands -->
+
+<div class="my-5">
+  <h2 class="mb-4">shop popular <span class="text-main">Brands</span></h2>
+  <div class="row">
+    <div *ngFor="let data of brands; let last = last" class="col-md-3">
+      <div class="bg-light rounded border p-2 text-center">
+        <img [src]="data.image" [alt]="data.title" class="w-100 imgStyle" />
+        <h6>{{ data.name }}</h6>
+      </div>
+      <div
+        *ngIf="last"
+        class="d-flex justify-content-end my-3 text-success fa-2x"
+        routerLink="/brands"
+      >
+        <i class="fa-solid far fa-circle-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+</div>
