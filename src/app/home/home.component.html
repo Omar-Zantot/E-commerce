@@ -19,31 +19,6 @@
   </div>
 </div>
 
-<!-- ^ Products  -->
-
-<div class="my-5">
-  <h2 class="mb-4">shop popular <span class="text-main">Products</span></h2>
-  <div class="row">
-    <div *ngFor="let data of products; let last = last" class="col-md-3">
-      <div class="bg-light rounded border p-2 text-center">
-        <img
-          [src]="data.imageCover"
-          [alt]="data.title"
-          class="w-100 imgStyle"
-        />
-        <h6>{{ data.title }}</h6>
-      </div>
-      <div
-        *ngIf="last"
-        class="d-flex justify-content-end my-3 text-success fa-2x"
-        routerLink="/products"
-      >
-        <i class="fa-solid far fa-circle-arrow-right"></i>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ^ Brands -->
 
 <div class="my-5">
@@ -60,6 +35,35 @@
         routerLink="/brands"
       >
         <i class="fa-solid far fa-circle-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ^ Products  -->
+
+<div class="my-5">
+  <h2 class="mb-4">shop popular <span class="text-main">Products</span></h2>
+  <div class="row">
+    <div *ngFor="let data of products" class="col-md-3">
+      <div class="product p-3 text-center fw-bold">
+        <img
+          [src]="data.imageCover"
+          [alt]="data.title"
+          class="w-100 imgStyle"
+        />
+        <!-- split : convert str to arr , slice : cut , join  : convert arr to str -->
+        <p class="text-main">{{ data.category.name }}</p>
+        <h6 class="fw-bold">
+          {{ data.title.split(" ").slice(0, 2).join(" ") }}
+        </h6>
+        <div class="text-muted d-flex justify-content-between">
+          <span>{{ data.price }} EGP</span>
+          <span class="rating-color"
+            ><i class="fa-solid fa-star"></i> {{ data.ratingsAverage }}</span
+          >
+        </div>
+        <button class="btn bg-main text-light w-100">Add +</button>
       </div>
     </div>
   </div>

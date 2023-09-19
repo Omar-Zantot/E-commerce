@@ -24,7 +24,7 @@ export class HomeComponent {
 
   getProducts() {
     this._DataService.getData('products').subscribe((response) => {
-      this.products = response.data.slice(0, 4);
+      this.products = response.data;
     });
   }
 

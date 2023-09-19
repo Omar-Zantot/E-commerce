@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class SignInComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
-  userData = null;
   constructor(private _Auth: AuthService, private _Router: Router) {}
 
   /**
@@ -40,7 +39,6 @@ export class SignInComponent {
       },
       error: (error) => {
         this.isLoading = false;
-
         this.errorMessage = error.error.message;
       },
       complete: () => {

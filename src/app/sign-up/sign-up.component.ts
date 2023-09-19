@@ -46,7 +46,7 @@ export class SignUpComponent {
   signUp(registerForm: FormGroup) {
     this.isLoading = true;
     this._Auth.signUp(registerForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this._Router.navigate(['/signin']);
       },
       error: (error) => {
@@ -59,8 +59,8 @@ export class SignUpComponent {
 
         this.errorMessage =
           error.error.message == 'fail'
-            ? 'Password confirmation is incorrect'
-            : error.error.message;
+            ? error.error.errors.msg // "Password confirmation is incorrect" or "must be at least 6 chars"
+            : error.error.message; // "Account Already Exists"
       },
       complete: () => {
         this.errorMessage = '';

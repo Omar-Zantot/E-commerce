@@ -14,7 +14,7 @@
       aria-label="Toggle navigation"
     ></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+      <ul *ngIf="isLogin" class="navbar-nav me-auto mt-2 mt-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="text-success" routerLink="home"
             >Home</a
@@ -75,16 +75,20 @@
           <i class="fab fa-behance mx-2"></i>
           <i class="fab fa-youtube mx-2"></i>
         </li>
-        <li class="nav-item">
-          <a routerLink="signin" class="nav-link d-inline-block px-2">Login</a>
+        <li *ngIf="!isLogin" class="nav-item">
+          <a routerLink="signin" class="nav-link d-inline-block px-2">LogIn</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="!isLogin" class="nav-item">
           <a routerLink="signup" class="nav-link d-inline-block px-2"
             >Register</a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link d-inline-block px-2">Logout</a>
+        <li *ngIf="isLogin" class="nav-item">
+          <a
+            (click)="logOut()"
+            class="nav-link d-inline-block px-2 cursor-pointer"
+            >LogOut</a
+          >
         </li>
       </ul>
     </div>

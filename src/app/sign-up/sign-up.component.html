@@ -20,19 +20,19 @@
         class="form-control"
       />
       <div
+        class="alert alert-danger my-1"
         *ngIf="
           registerForm.get('name')?.errors && registerForm.get('name')?.touched
         "
-        class="alert alert-danger my-1"
       >
         <p class="m-0" *ngIf="registerForm.get('name')?.getError('required')">
           required
         </p>
         <p class="m-0" *ngIf="registerForm.get('name')?.getError('minlength')">
-          minLength 3
+          min Length 3
         </p>
         <p class="m-0" *ngIf="registerForm.get('name')?.getError('maxlength')">
-          maxlength 15
+          max Length 15
         </p>
       </div>
     </div>
