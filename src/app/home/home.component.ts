@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 DataService;
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent {
 
   getCategories() {
     this._DataService.getData('categories').subscribe((response) => {
-      this.catData = response.data.slice(0, 4);
+      this.catData = response.data;
     });
   }
 
@@ -33,4 +34,30 @@ export class HomeComponent {
       this.brands = response.data.slice(0, 4);
     });
   }
+
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    autoplay: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      740: {
+        items: 4,
+      },
+      940: {
+        items: 5,
+      },
+    },
+    nav: true,
+  };
 }

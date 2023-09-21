@@ -18,7 +18,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { ProductdetailsComponent } from './productdetails/productdetails.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MainsliderComponent } from './mainslider/mainslider.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,12 +38,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     ProfileComponent,
     WishlistComponent,
+    ProductdetailsComponent,
+    MainsliderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

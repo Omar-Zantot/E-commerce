@@ -1,8 +1,11 @@
+<!-- main slider -->
+<app-mainslider></app-mainslider>
+
 <!-- ^ Categories  -->
 
 <div class="my-5">
   <h2 class="mb-4">shop popular <span class="text-main">Categories</span></h2>
-  <div class="row">
+  <!-- <div class="row">
     <div *ngFor="let data of catData; let last = last" class="col-md-3">
       <div class="bg-light rounded border p-2 text-center">
         <img [src]="data.image" [alt]="data.title" class="w-100 imgStyle" />
@@ -16,7 +19,15 @@
         <i class="fa-solid far fa-circle-arrow-right"></i>
       </div>
     </div>
-  </div>
+  </div> -->
+  <owl-carousel-o [options]="customOptions">
+    <ng-container *ngFor="let slide of catData">
+      <ng-template carouselSlide [id]="slide.id">
+        <img height="200" width="200" [src]="slide.image" class="w-100" />
+        <p>{{ slide.name }}</p>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
 </div>
 
 <!-- ^ Brands -->
@@ -46,25 +57,27 @@
   <h2 class="mb-4">shop popular <span class="text-main">Products</span></h2>
   <div class="row">
     <div *ngFor="let data of products" class="col-md-3">
-      <div class="product p-3 text-center fw-bold">
-        <img
-          [src]="data.imageCover"
-          [alt]="data.title"
-          class="w-100 imgStyle"
-        />
-        <!-- split : convert str to arr , slice : cut , join  : convert arr to str -->
-        <p class="text-main">{{ data.category.name }}</p>
-        <h6 class="fw-bold">
-          {{ data.title.split(" ").slice(0, 2).join(" ") }}
-        </h6>
-        <div class="text-muted d-flex justify-content-between">
-          <span>{{ data.price }} EGP</span>
-          <span class="rating-color"
-            ><i class="fa-solid fa-star"></i> {{ data.ratingsAverage }}</span
-          >
+      <a [routerLink]="['/details', data._id]">
+        <div class="product rounded-4 p-3 text-center fw-bold">
+          <img
+            [src]="data.imageCover"
+            [alt]="data.title"
+            class="w-100 imgStyle"
+          />
+          <!-- split : convert str to arr , slice : cut , join  : convert arr to str -->
+          <p class="text-main">{{ data.category.name }}</p>
+          <h6 class="fw-bold">
+            {{ data.title.split(" ").slice(0, 2).join(" ") }}
+          </h6>
+          <div class="text-muted d-flex justify-content-between mb-2">
+            <span>{{ data.price | currency : "EGP" }} </span>
+            <span class="rating-color"
+              ><i class="fa-solid fa-star"></i> {{ data.ratingsAverage }}</span
+            >
+          </div>
+          <button class="btn bg-main text-light w-100">Add +</button>
         </div>
-        <button class="btn bg-main text-light w-100">Add +</button>
-      </div>
+      </a>
     </div>
   </div>
 </div>
