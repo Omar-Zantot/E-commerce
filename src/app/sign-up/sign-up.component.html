@@ -136,6 +136,12 @@
         >
           enter a valid password
         </p>
+        <p
+          class="m-0"
+          *ngIf="registerForm.get('rePassword')?.getError('rePasswordMatch')"
+        >
+          rePassword does not match the password
+        </p>
       </div>
     </div>
 
