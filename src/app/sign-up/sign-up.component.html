@@ -92,7 +92,7 @@
           class="m-0"
           *ngIf="registerForm.get('password')?.getError('required')"
         >
-          this required input
+          required
         </p>
         <p
           class="m-0"
@@ -128,7 +128,7 @@
           class="m-0"
           *ngIf="registerForm.get('rePassword')?.getError('required')"
         >
-          this required input
+          required
         </p>
         <p
           class="m-0"
@@ -167,7 +167,7 @@
         class="alert alert-danger my-1"
       >
         <p class="m-0" *ngIf="registerForm.get('phone')?.getError('required')">
-          this required input
+          required
         </p>
         <p class="m-0" *ngIf="registerForm.get('phone')?.getError('pattern')">
           enter avalid phone number

@@ -39,4 +39,16 @@ export class AuthService {
     this.userData.next(null);
     this._Router.navigate(['/signin']);
   }
+
+  forgotPassword(formData: any): Observable<any> {
+    return this._HttpClient.post(`${this.baseUrl}/forgotPasswords`, formData);
+  }
+
+  verifyResetCode(formData: any): Observable<any> {
+    return this._HttpClient.post(`${this.baseUrl}/verifyResetCode`, formData);
+  }
+
+  resetPassword(formData: any): Observable<any> {
+    return this._HttpClient.put(`${this.baseUrl}/resetPassword`, formData);
+  }
 }

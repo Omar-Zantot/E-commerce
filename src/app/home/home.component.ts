@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 DataService;
@@ -7,8 +7,10 @@ DataService;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  constructor(private _DataService: DataService) {
+export class HomeComponent implements OnInit {
+  constructor(private _DataService: DataService) {}
+
+  ngOnInit(): void {
     this.getCategories();
     this.getProducts();
     this.getBrands();

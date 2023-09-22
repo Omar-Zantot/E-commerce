@@ -13,6 +13,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { authGuard } from './guards/authguard.guard';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -36,6 +38,8 @@ const routes: Routes = [
 
   { path: 'signup', component: SignUpComponent },
   { path: 'signin', component: SignInComponent },
+  { path: 'forgotPassword', component: ForgotPasswordComponent },
+  { path: 'resetPassword', component: ResetPasswordComponent },
 
   { path: '**', component: NotFoundComponent },
 ];

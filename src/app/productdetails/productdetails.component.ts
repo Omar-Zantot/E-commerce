@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -8,14 +8,15 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   templateUrl: './productdetails.component.html',
   styleUrls: ['./productdetails.component.scss'],
 })
-export class ProductdetailsComponent {
+export class ProductdetailsComponent implements OnInit {
   productId: any;
   productDetails: any;
 
   constructor(
     private _dataService: DataService,
     private _activatedRoute: ActivatedRoute
-  ) {
+  ) {}
+  ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe((param) => {
       this.productId = param.get('id');
     });
@@ -32,7 +33,7 @@ export class ProductdetailsComponent {
   }
   customOptions: OwlOptions = {
     loop: true,
-    mouseDrag: false,
+    mouseDrag: true,
     touchDrag: false,
     pullDrag: false,
     dots: false,
