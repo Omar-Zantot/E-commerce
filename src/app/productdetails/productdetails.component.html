@@ -10,8 +10,11 @@
   </div>
   <div class="col-md-8">
     <div class="">
-      <h2 class="fw-bold">{{ productDetails.title }}</h2>
-      <p class="pt-2 pb-5 text-muted">{{ productDetails.description }}</p>
+      <h2 class="fw-bold">{{ productDetails.title | uppercase }}</h2>
+      <p class="pt-2 pb-5 text-muted">
+        {{ productDetails.description | lowercase }}
+      </p>
+      <!-- <p>{{ productDetails.createdAt | date }}</p> -->
       <div class="text-muted d-flex justify-content-between mb-2">
         <span>{{ productDetails.price | currency : "EGP" }} </span>
         <span class="rating-color"
@@ -19,7 +22,12 @@
           {{ productDetails.ratingsAverage }}</span
         >
       </div>
-      <button class="btn bg-main text-light w-100">Add to Cart</button>
+      <button
+        (click)="addToCart(productDetails._id)"
+        class="btn bg-main text-light w-100"
+      >
+        Add to Cart
+      </button>
     </div>
   </div>
 </div>

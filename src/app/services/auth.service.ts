@@ -51,4 +51,10 @@ export class AuthService {
   resetPassword(formData: any): Observable<any> {
     return this._HttpClient.put(`${this.baseUrl}/resetPassword`, formData);
   }
+
+  autoLogin() {
+    const user = localStorage.getItem('userToken');
+    if (user) this.decodedUserData();
+    else this._Router.navigate(['/signin']);
+  }
 }

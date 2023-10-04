@@ -1,0 +1,15 @@
+<form [formGroup]="paymentForm" (ngSubmit)="onlinePayment(paymentForm)">
+  <label for="details">details</label>
+  <input
+    type="text"
+    class="form-control"
+    id="details"
+    formControlName="details"
+  />
+  <label for="phone">phone</label>
+  <input type="tel" class="form-control" id="phone" formControlName="phone" />
+  <label for="city">city</label>
+  <input type="text" class="form-control" id="city" formControlName="city" />
+
+  <button type="submit" class="btn bg-main my-3 text-light">pay</button>
+</form>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   isLogin: boolean = false;
-  constructor(private _Auth: AuthService) {}
+  cartNumber: number = 0;
+  constructor(private _Auth: AuthService, private _cart: CartService) {
+    _cart.numOfCartItems.subscribe({
+      next: (res) => {
+        this.cartNumber = res;
+      },
+    });
+  }
   ngOnInit(): void {
     this._Auth.userData.subscribe({
       next: () => {
