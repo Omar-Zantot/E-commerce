@@ -31,13 +31,11 @@ export class ProductdetailsComponent implements OnInit {
       .getProductsDetails(this.productId)
       .subscribe((product) => {
         this.productDetails = product.data;
-        console.log(this.productDetails);
       });
   }
   addToCart(productId: string) {
     this._cart.addProductToCart(productId).subscribe({
       next: (response) => {
-        console.log(response);
         this._cart.numOfCartItems.next(response.numOfCartItems);
         if (response.status == 'success') {
           Swal.fire({

@@ -17,7 +17,6 @@ export class CartComponent implements OnInit {
   getCartItems() {
     this._cart.getLoggedUserCart().subscribe({
       next: (response) => {
-        console.log(response.data);
         this.cartDetails = response.data;
       },
       error: (err) => {
@@ -29,7 +28,6 @@ export class CartComponent implements OnInit {
   removeItem(id: string) {
     this._cart.removeCartItem(id).subscribe({
       next: (response) => {
-        console.log(response);
         this.cartDetails = response.data;
         this._cart.numOfCartItems.next(response.numOfCartItems);
       },
@@ -45,11 +43,8 @@ export class CartComponent implements OnInit {
         this.count = response.data.products.count;
         this.cartDetails = response.data;
         if (!count) {
-          console.log(response);
-
           this.removeItem(productId);
         }
-        console.log(response);
       },
 
       error: (err) => {
