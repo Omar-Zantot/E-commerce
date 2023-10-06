@@ -1,3 +1,11 @@
 .imgStyle {
   height: 200px;
 }
+.product {
+  &:hover {
+    .heart {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

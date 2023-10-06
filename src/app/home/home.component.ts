@@ -12,6 +12,7 @@ DataService;
 })
 export class HomeComponent implements OnInit {
   searchVal: string = '';
+  favorites: boolean = false;
   constructor(
     private _DataService: DataService,
 
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   catData: any[] = [];
   products: any[] = [];
   brands: any[] = [];
+  whishList: any[] = [];
 
   getCategories() {
     this._DataService.getData('categories').subscribe((response) => {
@@ -83,6 +85,7 @@ export class HomeComponent implements OnInit {
             icon: 'success',
             text: response.message,
           });
+          document.querySelector('.forgotPassword')?.classList.add('d-none');
         }
       },
       error: (error) => {
@@ -90,4 +93,53 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+
+  addTowishList(productId: string) {
+    this._DataService.addToWishlist(productId).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.status == 'success') {
+          this.whishList = response.data;
+
+          Swal.fire({
+            icon: 'success',
+            text: response.message,
+          });
+          console.log('add');
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  removeFromWishlist(productId: string) {
+    this._DataService.removeWishlist(productId).subscribe({
+      next: (response) => {
+        if (response.status == 'success') {
+          this.whishList = response.data;
+
+          Swal.fire({
+            icon: 'success',
+            text: response.message,
+          });
+        }
+      },
+      error: (error) => {},
+    });
+  }
 }
+
+/**
+ * "status": "success",
+    "message": "Product removed successfully to your wishlist",
+    "data": [
+        "6428cbd5dc1175abc65ca037",
+        "6428cd70dc1175abc65ca03d",
+        "6428e997dc1175abc65ca0a1",
+        "6428dfa0dc1175abc65ca067",
+        "6428ebc6dc1175abc65ca0b9"
+    ]
+ *
+ */
