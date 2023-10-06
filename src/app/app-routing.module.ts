@@ -43,6 +43,16 @@ const routes: Routes = [
   { path: 'forgotPassword', component: ForgotPasswordComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
 
+  // & lazy loading
+  {
+    path: 'changePassword',
+    loadChildren: () => {
+      return import('./setting/setting.module').then((m) => {
+        return m.SettingModule;
+      });
+    },
+  },
+
   { path: '**', component: NotFoundComponent },
 ];
 

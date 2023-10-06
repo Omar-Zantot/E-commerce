@@ -11,6 +11,7 @@ DataService;
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  searchVal: string = '';
   constructor(
     private _DataService: DataService,
     private _Auth: AuthService,

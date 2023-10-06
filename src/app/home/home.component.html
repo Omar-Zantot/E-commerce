@@ -41,8 +41,13 @@
 
 <div class="my-5">
   <h2 class="mb-4">shop popular <span class="text-main">Products</span></h2>
+  <input
+    [(ngModel)]="searchVal"
+    type="text"
+    class="form-control w-75 my-3 m-auto"
+  />
   <div class="row">
-    <div *ngFor="let data of products" class="col-md-3">
+    <div *ngFor="let data of products | search : searchVal" class="col-md-3">
       <div class="product rounded-4 p-3 text-center fw-bold">
         <a [routerLink]="['/details', data._id]">
           <img
