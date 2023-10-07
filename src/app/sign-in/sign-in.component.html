@@ -1,7 +1,7 @@
 <div class="my-5 shadow-lg p-5 rounded-5">
   <h2 class="mb-3">Login Form</h2>
   <form [formGroup]="loginForm" (ngSubmit)="signIn(loginForm)">
-    <div *ngIf="errorMessage.length" class="alert alert-danger">
+    <div *ngIf="errorMessage?.length" class="alert alert-danger">
       {{ errorMessage }}
     </div>
 
