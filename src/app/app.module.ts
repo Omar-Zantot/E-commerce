@@ -11,8 +11,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BrandComponent } from './brand/brand.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { FooterComponent } from './footer/footer.component';
+import { ProfileComponent } from './profile/profile.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,10 +41,10 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
     BrandComponent,
     CartComponent,
     HomeComponent,
-
+    AboutComponent,
     CategoriesComponent,
     FooterComponent,
-
+    ProfileComponent,
     WishlistComponent,
     ProductdetailsComponent,
     MainsliderComponent,

@@ -41,6 +41,7 @@ export class ForgotPasswordComponent {
   }
 
   verfiyCode(verfiyCode: FormGroup) {
+    console.log(verfiyCode);
     this._Auth.verifyResetCode(verfiyCode.value).subscribe({
       next: (response) => {
         this.successMessage = response.message;

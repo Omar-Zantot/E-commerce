@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   favorites: boolean = false;
   constructor(
     private _DataService: DataService,
-
+    private _Auth: AuthService,
     private _cart: CartService
   ) {}
 
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     this.getCategories();
     this.getProducts();
     this.getBrands();
+    console.log(this._Auth.userData.getValue());
   }
 
   catData: any[] = [];
@@ -79,6 +80,7 @@ export class HomeComponent implements OnInit {
   addToCart(productId: string) {
     this._cart.addProductToCart(productId).subscribe({
       next: (response) => {
+        console.log(response);
         this._cart.numOfCartItems.next(response.numOfCartItems);
         if (response.status == 'success') {
           Swal.fire({
