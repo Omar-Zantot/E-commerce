@@ -32,14 +32,18 @@ export class SignInComponent {
     this._Auth.signIn(signInForm.value).subscribe({
       next: (response) => {
         if (response.message === 'success') {
+          console.log(response);
+
           localStorage.setItem('userToken', response.token);
           this._Auth.decodedUserData();
           this._Router.navigate(['/home']);
         }
       },
       error: (error) => {
+        console.log(error);
+
         this.isLoading = false;
-        this.errorMessage = error.error.message;
+        // this.errorMessage = error.error.message;
       },
       complete: () => {
         this.errorMessage = '';
