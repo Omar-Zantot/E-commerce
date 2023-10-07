@@ -31,6 +31,8 @@ export class SignInComponent {
     this.isLoading = true;
     this._Auth.signIn(signInForm.value).subscribe({
       next: (response) => {
+        console.log(response);
+
         if (response.message === 'success') {
           console.log(response);
 
