@@ -30,6 +30,7 @@ export class CheckoutComponent implements OnInit {
   onlinePayment(paymentForm: FormGroup) {
     this._cartService.handelPayment(this.cartId, paymentForm.value).subscribe({
       next: (response) => {
+        console.log(response);
         if (response.status === 'success') {
           this.navigateToPage(response.session.url);
         }

@@ -39,10 +39,8 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
     BrandComponent,
     CartComponent,
     HomeComponent,
-
     CategoriesComponent,
     FooterComponent,
-
     WishlistComponent,
     ProductdetailsComponent,
     MainsliderComponent,

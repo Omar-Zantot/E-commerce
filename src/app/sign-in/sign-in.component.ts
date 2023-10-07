@@ -35,12 +35,15 @@ export class SignInComponent {
         console.log(response);
 
         if (response.message === 'success') {
+          console.log(response);
+
           localStorage.setItem('userToken', response.token);
           this._Auth.decodedUserData();
           this._Router.navigate(['/home']);
         }
       },
       error: (error) => {
+
         // console.log(error);
         // this.isLoading = false;
         // // this.errorMessage = error.error.message;
@@ -53,6 +56,9 @@ export class SignInComponent {
           // You can display a generic error message or take appropriate action.
           this.errorMessage = 'An error occurred.';
         }
+
+        
+
       },
       complete: () => {
         this.errorMessage = '';
