@@ -25,6 +25,8 @@ export class AuthService {
   }
 
   signIn(formData: any): Observable<any> {
+    console.log(formData);
+
     return this._HttpClient.post(`${this.baseUrl}/signin`, formData);
   }
 

@@ -28,9 +28,12 @@ export class SignInComponent {
   });
 
   signIn(signInForm: FormGroup) {
+    console.log(signInForm.value);
     this.isLoading = true;
     this._Auth.signIn(signInForm.value).subscribe({
       next: (response) => {
+        console.log(response);
+
         if (response.message === 'success') {
           localStorage.setItem('userToken', response.token);
           this._Auth.decodedUserData();
@@ -38,12 +41,31 @@ export class SignInComponent {
         }
       },
       error: (error) => {
+        // console.log(error);
+        // this.isLoading = false;
+        // // this.errorMessage = error.error.message;
+        // console.log(error);
         this.isLoading = false;
-        this.errorMessage = error.error.message;
+        if (error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          // Handle cases where 'error' or 'error.message' is undefined
+          // You can display a generic error message or take appropriate action.
+          this.errorMessage = 'An error occurred.';
+        }
       },
       complete: () => {
         this.errorMessage = '';
         this.isLoading = false;
+      },
+    });
+  }
+
+  LogIn(signInForm: FormGroup) {
+    this.isLoading = true;
+    this._Auth.signIn(signInForm.value).subscribe({
+      next: (response) => {
+        console.log(response);
       },
     });
   }
