@@ -66,42 +66,12 @@
             >
           </div>
         </a>
-        <div class="d-flex justify-content-between align-items-center">
-          <button
-            (click)="addToCart(data._id)"
-            class="btn bg-main text-light w-75"
-          >
-            Add +
-          </button>
-          <div
-            *ngIf="!whishList.includes(data._id)"
-            (click)="addTowishList(data._id)"
-          >
-            <i class="fa-solid fa-heart text-dark fa-lg"></i>
-          </div>
-          <div
-            *ngIf="whishList.includes(data._id)"
-            (click)="removeFromWishlist(data._id)"
-          >
-            <i class="fa-solid fa-heart text-danger fa-lg"></i>
-          </div>
-          <!-- <span
-            *ngIf="!whishList.includes(data._id)"
-            (click)="addTowishList(data._id)"
-            role="button"
-            class="heart"
-          >
-            <i class="fas fa-heart"></i>
-          </span> -->
-          <!-- (click)="removeFromWhish(data._id)" -->
-          <!-- <span
-            *ngIf="whishList.includes(data._id)"
-            role="button"
-            class="heart"
-          >
-            <i class="fa-solid fa-heart-crack"></i>
-          </span> -->
-        </div>
+        <button
+          (click)="addToCart(data._id)"
+          class="btn bg-main text-light w-100"
+        >
+          Add +
+        </button>
       </div>
     </div>
   </div>

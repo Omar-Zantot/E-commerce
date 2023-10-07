@@ -1,25 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
-  styleUrls: ['./wishlist.component.scss'],
+  styleUrls: ['./wishlist.component.scss']
 })
-export class WishlistComponent implements OnInit {
-  wishListDetails?: any;
+export class WishlistComponent {
 
-  constructor(private _dataService: DataService) {}
-
-  ngOnInit() {
-    this.getWishList();
-  }
-
-  getWishList() {
-    this._dataService.getWishlist().subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-    });
-  }
 }

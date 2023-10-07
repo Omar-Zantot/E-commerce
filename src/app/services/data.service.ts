@@ -18,28 +18,4 @@ export class DataService {
   getProductsDetails(id: string): Observable<any> {
     return this._HttpClient.get(`${this.baseUrl}/api/v1/products/${id}`);
   }
-
-  addToWishlist(id: string): Observable<any> {
-    return this._HttpClient.post(
-      `${this.baseUrl}/api/v1/wishlist`,
-      // body
-      {
-        productId: id,
-      }
-    );
-  }
-
-  setWishlist(id: string): Observable<any> {
-    return this._HttpClient.post(`${this.baseUrl}/api/v1/wishlist`, {
-      productId: id,
-    });
-  }
-
-  removeWishlist(id: string): Observable<any> {
-    return this._HttpClient.delete(`${this.baseUrl}/api/v1/wishlist/${id}`);
-  }
-
-  getWishlist(): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}/api/v1/wishlist`);
-  }
 }
