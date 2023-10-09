@@ -1,1 +1,31 @@
-<p>wishlist works!</p>
+<div class="bg-main-light my-5 p-5">
+  <h2>My wish List</h2>
+
+  <div
+    class="row border-bottom my-3 d-flex align-items-center p-2 ng-star-inserted"
+    *ngFor="let data of wishListDetails"
+  >
+    <div class="col-md-2">
+      <img alt="" class="w-100" [src]="data.imageCover" />
+    </div>
+    <div class="col-md-10 d-flex justify-content-between">
+      <div>
+        <h5>{{ data.title.split(" ").slice(0, 2).join(" ") }}</h5>
+        <h6 class="text-success">
+          {{ data.price | currency : "EGP" }}
+        </h6>
+        <button class="btn btn-sm m-0 p-0 text-danger">
+          <i class="fa fa-trash"></i> Remove
+        </button>
+      </div>
+      <div>
+        <button
+          class="btn-count btn btn-lg d-block mx-auto"
+          (click)="addToCart(data._id)"
+        >
+          add To Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

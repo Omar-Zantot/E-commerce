@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from '../services/auth.service';
@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit {
     this.getCategories();
     this.getProducts();
     this.getBrands();
-    console.log(this._Auth.userData.getValue());
+    this.getWishList();
+    console.log(this.whishList);
   }
 
   catData: any[] = [];
@@ -100,14 +101,14 @@ export class HomeComponent implements OnInit {
         console.log(response);
         if (response.status == 'success') {
           this.whishList = response.data;
+          localStorage.setItem('wishlist', JSON.stringify(this.whishList));
 
           Swal.fire({
             icon: 'success',
             text: response.message,
           });
-          console.log('add');
-          document.querySelector('.fa-heart')?.classList.remove('text-dark');
-          document.querySelector('.fa-heart')?.classList.add('text-danger');
+
+          this.updateHeartIcon(productId);
         }
       },
       error: (error) => {
@@ -116,20 +117,43 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getWishList() {
+    this._DataService.getWishlist().subscribe({
+      next: (response) => {
+        this.whishList = response.data;
+      },
+    });
+  }
   removeFromWishlist(productId: string) {
     this._DataService.removeWishlist(productId).subscribe({
       next: (response) => {
         if (response.status == 'success') {
           this.whishList = response.data;
+          localStorage.setItem('wishlist', JSON.stringify(this.whishList));
+          console.log(response.data);
 
           Swal.fire({
             icon: 'success',
             text: response.message,
           });
+          this.updateHeartIcon(productId);
         }
       },
       error: (error) => {},
     });
+  }
+
+  updateHeartIcon(productId: string) {
+    const heartIcon = document.querySelector('.fa-heart');
+    if (heartIcon) {
+      if (!this.whishList.includes(productId)) {
+        heartIcon.classList.remove('text-dark');
+        heartIcon.classList.add('text-danger');
+      } else {
+        heartIcon.classList.remove('text-danger');
+        heartIcon.classList.add('text-dark');
+      }
+    }
   }
 }
 
