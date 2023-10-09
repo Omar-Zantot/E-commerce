@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((wishlist) => {
         this.wishList = wishlist.data;
         // Update the heart icons based on the updated wishlist
+        this.getProducts();
         this.updateHeartIcons();
       });
   }
