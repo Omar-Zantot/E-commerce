@@ -66,12 +66,7 @@
             >
           </div>
         </a>
-        <!-- <button
-          (click)="addToCart(data._id)"
-          class="btn bg-main text-light w-100"
-        >
-          Add +
-        </button> -->
+
         <div class="d-flex justify-content-between align-items-center">
           <button
             (click)="addToCart(data._id)"
@@ -79,17 +74,25 @@
           >
             Add +
           </button>
-          <div
-            *ngIf="!whishList.includes(data._id)"
-            (click)="addTowishList(data._id)"
-          >
-            <i class="fa-solid fa-heart text-dark fa-lg"></i>
-          </div>
-          <div
-            *ngIf="whishList.includes(data._id)"
-            (click)="removeFromWishlist(data._id)"
-          >
-            <i class="fa-solid fa-heart text-danger fa-lg"></i>
+          <!-- wishlist -->
+          <!-- <div (click)="toggleWishlist(data._id)">
+            <ng-container *ngIf="!isInWishlist(data._id)">
+              <i class="fa-solid fa-heart text-dark fa-lg"></i>
+            </ng-container>
+            <ng-container *ngIf="isInWishlist(data._id)">
+              <i class="fa-solid fa-heart text-danger fa-lg"></i>
+            </ng-container>
+          </div> -->
+          <div>
+            <i
+              class="fa fa-heart"
+              [ngClass]="{
+                'text-danger': isInWishlist(data._id),
+                'text-dark': !isInWishlist(data._id)
+              }"
+              [attr.data-product-id]="data._id"
+              (click)="toggleWishlist(data._id)"
+            ></i>
           </div>
         </div>
       </div>
@@ -98,3 +101,26 @@
 </div>
 
 <!-- split : convert str to arr , slice : cut , join  : convert arr to str -->
+
+<!-- <div
+            *ngIf="!whishList.includes(data._id)"
+            (click)="addTowishList(data._id)"
+          >
+            <i class="fa-solid fa-heart text-dark fa-lg"></i>
+          </div> -->
+<!-- <div
+            *ngFor="let wishlistItemId of whishList"
+            (click)="addTowishList(wishlistItemId._id)"
+          >
+            <ng-container *ngIf="wishlistItemId._id !== data._id">
+              <i class="fa-solid fa-heart text-dark fa-lg"></i>
+            </ng-container>
+          </div>
+          <div
+            *ngFor="let wishlistItemId of whishList"
+            (click)="removeFromWishlist(wishlistItemId._id)"
+          >
+            <ng-container *ngIf="wishlistItemId._id === data._id">
+              <i class="fa-solid fa-heart text-danger fa-lg"></i>
+            </ng-container>
+          </div> -->

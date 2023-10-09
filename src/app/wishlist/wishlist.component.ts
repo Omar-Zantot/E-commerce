@@ -26,6 +26,7 @@ export class WishlistComponent {
       },
     });
   }
+
   addToCart(productId: string) {
     this._cart.addProductToCart(productId).subscribe({
       next: (response) => {

@@ -14,7 +14,10 @@
         <h6 class="text-success">
           {{ data.price | currency : "EGP" }}
         </h6>
-        <button class="btn btn-sm m-0 p-0 text-danger">
+        <button
+          class="btn btn-sm m-0 p-0 text-danger"
+          (click)="removeFromWishlist(data._id)"
+        >
           <i class="fa fa-trash"></i> Remove
         </button>
       </div>
