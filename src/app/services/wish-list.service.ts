@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {
   ProductResponse,
   WishlistItem,
@@ -27,9 +27,9 @@ export class WishListService {
     );
   }
 
-  removeWishlist(id: string): Observable<WishlistResponse> {
+  removeFromWishlist(productId: string): Observable<WishlistResponse> {
     return this._HttpClient.delete<WishlistResponse>(
-      `${this.baseUrl}/api/v1/wishlist/${id}`
+      `${this.baseUrl}/api/v1/wishlist/${productId}`
     );
   }
 
@@ -43,12 +43,12 @@ export class WishListService {
     return this.wishlistItems.some((item) => item._id === productId);
   }
 
-  // Add or remove items from the wishlist and update wishlistItems accordingly
-  toggleWishlist(productId: string): Observable<WishlistResponse> {
-    if (this.isInWishlist(productId)) {
-      return this.removeWishlist(productId);
-    } else {
-      return this.setWishlist(productId);
-    }
-  }
+  // // Add or remove items from the wishlist and update wishlistItems accordingly
+  // toggleWishlist(productId: string): Observable<WishlistResponse> {
+  //   if (this.isInWishlist(productId)) {
+  //     return this.removeWishlist(productId);
+  //   } else {
+  //     return this.setWishlist(productId);
+  //   }
+  // }
 }

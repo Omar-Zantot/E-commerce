@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { DataService } from '../services/data.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from '../services/auth.service';
@@ -6,7 +12,11 @@ import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
 import { WishListService } from '../services/wish-list.service';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Product, WishlistItem } from '../interfaces/whislist';
+import {
+  Product,
+  WishlistItem,
+  WishlistResponse,
+} from '../interfaces/whislist';
 
 @Component({
   selector: 'app-home',
@@ -19,28 +29,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: any[] = [];
   brands: any[] = [];
   wishList: Product[] = [];
-  wishListDetails?: any;
-
-  constructor(
-    private _DataService: DataService,
-    private _Auth: AuthService,
-    private _cart: CartService,
-    private wishlistService: WishListService
-  ) {}
+  selectedProductId: string | null = null;
+  favItems: string[] = [];
   private wishListSubscription!: Subscription;
-
-  ngOnInit(): void {
-    this.getWishList();
-    this.getCategories();
-    this.getProducts();
-    this.getBrands();
-    this.wishListSubscription = this.wishlistService
-      .getWishlist()
-      .subscribe((wishlist) => {
-        this.wishList = wishlist.data;
-      });
-  }
-
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -59,6 +50,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     nav: true,
   };
 
+  constructor(
+    private _DataService: DataService,
+    private _Auth: AuthService,
+    private _cart: CartService,
+    private wishlistService: WishListService
+  ) {}
+
+  ngOnInit(): void {
+    this.getWishList();
+    this.getCategories();
+    this.getProducts();
+    this.getBrands();
+    this.wishListSubscription = this.wishlistService
+      .getWishlist()
+      .subscribe((wishlist) => {
+        this.wishList = wishlist.data;
+        // Update the heart icons based on the updated wishlist
+        this.updateHeartIcons();
+      });
+  }
+
   ngOnDestroy(): void {
     // Unsubscribe to prevent memory leaks
     this.wishListSubscription.unsubscribe();
@@ -76,7 +88,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._DataService.getData('products').subscribe((response) => {
       this.products = response.data;
       // Update heart icons based on wishlist once products are loaded
-      this.updateHeartIcons();
+      // this.updateHeartIcons();
     });
   }
 
@@ -92,72 +104,53 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._DataService.getWishlist().subscribe({
       next: (response) => {
         this.wishList = response.data;
+        // Update the heart icons based on the wishlist once it's loaded
+        this.updateHeartIcons();
       },
     });
   }
 
   // Wishlist methods
-  isInWishlist(itemId: string): boolean {
-    return this.wishList.some((product) => product._id === itemId);
+  // Check if a product is in the wishlist
+  isInWishlist(productId: string): boolean {
+    return this.wishList.some((product) => product._id === productId);
   }
 
-  toggleWishlist(itemId: string): void {
-    const isInWishlist = this.isInWishlist(itemId);
+  // isInWishlist_(productId: string): boolean {
+  //   return this.favItems.includes(productId);
+  // }
+
+  toggleWishlist(productId: string): void {
+    const isInWishlist = this.isInWishlist(productId);
 
     if (isInWishlist) {
-      this.removeFromWishlist(itemId);
+      this.removeFromWishlist(productId);
     } else {
-      this.addTowishList(itemId);
+      this.addTowishList(productId);
     }
-    this.wishlistService.getWishlist().subscribe({
-      next: (response) => {
-        if (response.status === 'success') {
-          this.wishList = response.data;
-          localStorage.setItem('wishlist', JSON.stringify(this.wishList));
-          // Update the heart icons based on the updated wishlist
-          this.updateHeartIcons();
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+
+    this.updateHeartIcon(productId);
   }
 
-  // isInWishlist(itemId: string): boolean {
-  //   return this.whishList.includes(itemId);
-  // }
-
-  // toggleWishlist(itemId: string): void {
-  //   const isInWishlist = this.isInWishlist(itemId);
-
-  //   if (isInWishlist) {
-  //     this.removeFromWishlist(itemId);
-  //   } else {
-  //     this.addTowishList(itemId);
-  //   }
-  // }
-
+  // Remove a product from the wishlist
   removeFromWishlist(productId: string) {
-    this._DataService.removeWishlist(productId).subscribe({
-      next: (response) => {
-        if (response.status == 'success') {
-          this.wishList = response.data;
-          localStorage.setItem('wishlist', JSON.stringify(this.wishList));
-          this.updateHeartIcon(productId);
-        }
-      },
-      error: (error) => {},
-    });
-  }
+    this.wishlistService.removeFromWishlist(productId).subscribe({
+      next: (response: WishlistResponse) => {
+        console.log(response);
 
-  addTowishList(productId: string) {
-    this._DataService.addToWishlist(productId).subscribe({
-      next: (response) => {
-        if (response.status == 'success') {
-          this.wishList = response.data;
-          localStorage.setItem('wishlist', JSON.stringify(this.wishList));
+        if (response.status === 'success') {
+          // Find the index of the productId in favItems and remove it
+          const index = this.favItems.indexOf(productId);
+          if (index !== -1) {
+            this.favItems.splice(index, 1);
+          }
+
+          localStorage.setItem('wishlist', JSON.stringify(this.favItems));
           this.updateHeartIcon(productId);
+          Swal.fire({
+            icon: 'success',
+            text: response.message,
+          });
         }
       },
       error: (error) => {
@@ -166,34 +159,53 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Update heart icon based on wishlist status
+  // Add a product to the wishlist
+  addTowishList(productId: string) {
+    this.wishlistService.setWishlist(productId).subscribe({
+      next: (response: WishlistResponse) => {
+        console.log(response);
 
+        if (response.status === 'success') {
+          // Add the productId to favItems if it doesn't already exist
+          if (!this.favItems.includes(productId)) {
+            this.favItems.push(productId);
+          }
+
+          localStorage.setItem('wishlist', JSON.stringify(this.favItems));
+          this.updateHeartIcon(productId);
+
+          Swal.fire({
+            icon: 'success',
+            text: response.message,
+          });
+          // this.getProducts();
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  // Update the heart icon color based on wishlist status
   updateHeartIcon(productId: string) {
-    // const heartIcon = document.querySelector('.fa-heart');
-    // if (heartIcon) {
-    //   if (!this.whishList.includes(productId)) {
-    //     heartIcon.classList.remove('text-dark');
-    //     heartIcon.classList.add('text-danger');
-    //   } else {
-    //     heartIcon.classList.remove('text-danger');
-    //     heartIcon.classList.add('text-dark');
-    //   }
-    // }
+    console.log('will updata');
+
+    const heartIcon = document.querySelector(
+      `[data-product-id="${productId}"]`
+    );
+    if (heartIcon) {
+      const isInWishlist = this.isInWishlist(productId);
+      heartIcon.classList.toggle('text-danger', isInWishlist);
+      heartIcon.classList.toggle('text-dark', !isInWishlist);
+    }
   }
 
   // Update heart icons based on the wishlist
   updateHeartIcons() {
-    const heartIcons = document.querySelectorAll('.fa-heart');
-    if (heartIcons) {
-      heartIcons.forEach((heartIcon) => {
-        const productId = heartIcon.getAttribute('data-product-id');
-        if (productId) {
-          const isInWishlist = this.isInWishlist(productId);
-          heartIcon.classList.toggle('text-danger', isInWishlist);
-          heartIcon.classList.toggle('text-dark', !isInWishlist);
-        }
-      });
-    }
+    this.products.forEach((product) => {
+      this.updateHeartIcon(product._id);
+    });
   }
 
   // Cart methods
